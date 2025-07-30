@@ -1,6 +1,9 @@
+let colorVariable = false;
+let userInput = 16;
 const button = document.querySelector("button");
+const colormode = document.querySelector("#coloringmode");
 const container = document.querySelector("#container");
-let userInput =16;
+
 
 button.addEventListener("click", () => {
     userInput = prompt("What is the size of the grid you want? ");
@@ -11,6 +14,16 @@ button.addEventListener("click", () => {
 
     createGrid(userInput);
 });
+
+colormode.addEventListener("click", () => {
+    colorVariable = !colorVariable;
+
+    container.querySelectorAll(".columnContainer").forEach((h)=>{
+        h.remove();
+    })
+
+    createGrid(userInput);
+})
 
 
 
@@ -28,12 +41,44 @@ function createGrid(userInput){
             // square.style.borderColor = "black";
             // square.style.borderStyle = "solid";
             square.style.outline = `${16/userInput * 2}px solid black `
+            square.style.transition = "outline 0.2s ease"
             square.classList.add("square");
             newDiv.appendChild(square);
         }
     }
 
+
+    container.querySelectorAll(".square").forEach((h) => {
+        h.addEventListener("mouseenter", () => {
+            h.style.backgroundColor = getRandomColor();
+        });
+    })
+
+    if (colorVariable == false){
+        container.querySelectorAll(".square").forEach((h) => {
+            let a =0;
+            h.addEventListener("mouseleave", () => {
+                a += 0.1;
+                h.style.backgroundColor = `rgba(0,0,0,${a})`;
+            });
+        })
+    }
+
 }
 
-createGrid(16);
 
+function getRandomColor(){
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+
+    const color = `${r},${g},${b}`;
+
+    return `rgb(${color})`;
+}
+
+
+
+
+
+createGrid(16);

@@ -6,7 +6,14 @@ const container = document.querySelector("#container");
 
 
 button.addEventListener("click", () => {
-    userInput = prompt("What is the size of the grid you want? ");
+    let loop = true;
+
+    while (loop){
+        userInput = prompt("What is the size of the grid you want? ");
+        if (userInput <= 100 && userInput > 1) {
+            loop = false;
+        }
+    }
 
     container.querySelectorAll(".columnContainer").forEach((h)=>{
         h.remove();
